@@ -1,5 +1,9 @@
 # Blog-System
 基于 Django + Bootstrap 的个人博客系统
+## 启动项目
+```
+python manage.py runserver
+```
 ## 关于python版本
 建议使用3.10版本，如果不幸使用了3.14以上版本请按照以下流程重新建立一个虚拟环境
 退出旧环境（如果当前还激活着）
@@ -37,8 +41,26 @@ pip install django pymysql -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 python -c "import MySQLdb; print('mysqlclient OK')"
 ```
+
 继续迁移
 ```
 python manage.py makemigrations
 python manage.py migrate
+```
+## 将验证码存储到数据库
+在blogauth/views.py导入from blogauth.models import CaptchaModel
+在blogauth/models.py的CaptchaModel类里的email = models.EmailField()添加参数unique=True变成email = models.EmailField(unique=True)
+再重新
+```
+python manage.py makemigrations
+python manage.py migrate
+```
+## 获取验证码按钮倒计时功能
+使用jquery
+创建static/jquery文件夹，把jquery-3.7.1.min.js拷进去
+在templates/register.html的title下方加入以下代码
+```
+{% block head %}
+    <script src="{% static 'jquery/jquery-3.7.1.min.js' %}"></script>
+{% endblock %}
 ```
