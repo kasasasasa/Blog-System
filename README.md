@@ -55,6 +55,9 @@ python manage.py migrate
 python manage.py makemigrations
 python manage.py migrate
 ```
+启动项目，访问http://localhost:8000/auth/captcha/?email=2664272312@qq.com
+查看是否有四位验证码返回
+并打开数据库查看是否有相应信息存入
 ## 获取验证码按钮倒计时功能
 使用jquery
 创建static/jquery文件夹，把jquery-3.7.1.min.js拷进去
