@@ -61,9 +61,110 @@ python manage.py migrate
 ## 获取验证码按钮倒计时功能
 使用jquery
 创建static/jquery文件夹，把jquery-3.7.1.min.js拷进去
+创建static/js/register.js文件，用来写发送验证码请求的代码
+```
+$(function (){
+    function bindCaptchaBtnClick() {
+            $("#captcha-btn").click(function (event){
+            let $this = $(this);
+            let email = $("input[name='email']").val();
+            if(!email){
+                alert("请先输入邮箱！");
+                return;
+            }
+            //取消按钮的点击事件
+            $this.off('click');
+
+            //发送ajax请求(借助jqery)
+            $.ajax('/auth/captcha/?email='+email,{
+                method:'GET',
+                success:function (result){
+                    //console.log(result);
+                    if(result['code'] == 200){
+                        alert("验证码发送成功！");
+                    }else {
+                        alert(result['message']);
+                    }
+                },
+                fail:function (error) {
+                    console.log(error);
+                }
+            })
+
+            //倒计时
+            let countdown = 60;
+            let timer = setInterval(function () {
+                if(countdown<=0){
+                    $this.text('获取验证码');
+                    //清掉定时器
+                    clearInterval(timer);
+                    //重新绑定点击事件
+                    bindCaptchaBtnClick();
+                }else {
+                    countdown--;
+                    $this.text(countdown+"s");
+                }
+            },1000);
+        })
+    }
+    bindCaptchaBtnClick();
+});
+```
 在templates/register.html的title下方加入以下代码
 ```
 {% block head %}
     <script src="{% static 'jquery/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'js/register.js' %}"></script>
 {% endblock %}
+```
+把按钮代码添加一个id
+```
+<button class="btn btn-outline-secondary" type="button" id="captcha-btn">获取验证码</button>
+```
+访问注册页面测试一下
+## 注册功能实现
+在blogauth/views.py导入from django.views.decorators.http import require_http_methods
+在register函数上面添加装饰器
+```
+@require_http_methods(['GET','POST'])
+```
+在blogauth/migrations文件夹下新建一个forms.py文件
+```
+from django import forms
+from django.contrib.auth import get_user_model
+from .models import CaptchaModel
+
+User = get_user_model()
+
+class RegisterForm(forms.Form):
+    username = forms.CharField(max_length=20,min_length=2,error_messages={
+        'required':'请传入用户名!',
+        'max_length':'用户名长度在2~20之间!',
+        'min_length': '用户名长度在2~20之间!'
+    })
+    email = forms.EmailField(error_messages={'required':'请传入邮箱!','invalid':'请传入一个正确的邮箱!'})
+    captcha = forms.CharField(max_length=4,min_length=4)
+    password = forms.CharField(max_length=20,min_length=6)
+
+    #验证邮箱
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        exists = User.objects.filter(email=email).exists()
+        if exists:
+            raise forms.ValidationError('邮箱已经被注册!')
+        return email
+
+    def clean_captcha(self):
+        captcha = self.cleaned_data.get('captcha')
+        email = self.cleaned_data.get('email')
+
+        captcha_model = CaptchaModel.objects.filter(email=email,captcha=captcha).first()
+        if not captcha_model:
+            raise forms.ValidationError("验证码和邮箱不匹配!")
+        captcha_model.delete()
+        return captcha
+```
+在templates/html/register.html的form表单里添加一行
+```
+{% csrf_token %}
 ```
