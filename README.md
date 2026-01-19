@@ -168,3 +168,33 @@ class RegisterForm(forms.Form):
 ```
 {% csrf_token %}
 ```
+```
+{% if form.errors %}
+  <div class="alert alert-danger">
+      {{ form.errors }}
+  </div>
+{% endif %}
+```
+完善blogauth/views.py的register方法
+```
+def register(request):
+    if request.method == 'GET':
+        get_token(request)
+        return render(request, 'register.html')
+    else:
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('email')
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            User.objects.create_user(username=username, email=email, password=password)
+            return redirect(reverse('blogauth:login'))
+        else:
+            print(form.errors)
+            #重新跳转到登录页面
+            return render(request, 'register.html', {
+                'form': form
+            })
+```
+
+
