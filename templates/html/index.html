@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}幻想简报首页{% endblock %}
+
+{% block main %}
+    <h1>博客列表</h1>
+    <div class="row row-cols-2 row-gap-4">
+        <div class="card">
+            <div class="card-header">
+                <a href="#" class="herf">Django基础</a>
+            </div>
+            <div class="card-body" style="height: 100px">
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            </div>
+            <div class="card-footer text-body-secondary d-flex justify-content-between">
+                <div>
+                    <img src="{% static 'image/avatar.webp' %}" class="rounded-circle" width="30" height="30" alt="">
+                    werwerwer
+                </div>
+                <div>发布时间：2025年12月1日 17：07</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>幻想剪报</title>
+    <link rel="stylesheet" href="{% static 'bootstrap5/bootstrap.min.css' %}">
+    <script src="{% static 'bootstrap5/popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap5/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+<header class="p-3 text-bg-light border-bottom mb-3">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"><a href="/static"
+                                                                                                            class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="启动" _mstaria-label="138918"
+                 _mstHash="27">
+                <use xlink:href="#bootstrap"></use>
+            </svg>
+        </a>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="#" class="nav-link px-2 text-secondary" _msttexthash="2136498" _msthash="28">首页</a></li>
+                <li><a href="#" class="nav-link px-2 text-secondary" _msttexthash="5209451" _msthash="29">发布博客</a>
+                </li>
+            </ul>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search"><input type="search"
+                                                                                       class="form-control"
+                                                                                       placeholder="搜索..."
+                                                                                       aria-label="搜索"
+                                                                                       _mstplaceholder="99723"
+                                                                                       _msthash="33"
+                                                                                       _mstaria-label="74607"></form>
+            <div class="text-end">
+                <button type="button" class="btn btn-outline-primary me-2" _msttexthash="5298241" _msthash="34">登录
+                </button>
+                <button type="button" class="btn btn-primary" _msttexthash="4708184" _msthash="35">注册</button>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="container bg-white rounded">
+    <h1>这是标题</h1>
+    <hr>
+    <div class="mt-2">
+        <img src="{% static 'image/avatar.webp' %}" class="rounded-circle" width="30" height="30" alt="">
+        <span class="ms-2">werwerwer</span>
+        <span class="ms-2">于</span>
+        <span class="ms-2">2025年12月1日 17：21</span>发布
+        <hr>
+        <div class="py-2">
+            这是博客详情
+        </div>
+        <hr>
+        <div class="mt-2">
+            <h3>评论（10）</h3>
+            <form action="" method="post">
+                <div class="mt-2">
+                    <input type="text" class="form-control" placeholder="请输入评论">
+                </div>
+                <div class="text-end mt-2">
+                    <button type="button" class="btn btn-primary">评论</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="mt-2">
+        <ul class="list-group">
+          <li class="list-group-item mb-3">
+              <div class="d-flex justify-content-between text-body-secondary">
+                  <div class="user-info">
+                      <img src="{% static 'image/avatar.webp' %}" class="rounded-circle" width="40" height="40" alt="">
+                      <span class="ms-2">werwerwer</span>
+                  </div>
+                  <div class="create-time" style="line-height: 40px;">2025年12月2日 14：56</div>
+              </div>
+              <div class="mt-2">这是评论内容</div>
+          </li>
+          <li class="list-group-item mb-3">
+              <div class="d-flex justify-content-between text-body-secondary">
+                  <div class="user-info">
+                      <img src="{% static 'image/avatar.webp' %}" class="rounded-circle" width="40" height="40" alt="">
+                      <span class="ms-2">werwerwer</span>
+                  </div>
+                  <div class="create-time" style="line-height: 40px;">2025年12月2日 14：56</div>
+              </div>
+              <div class="mt-2">这是评论内容</div>
+          </li>
+        </ul>
+    </div>
+</main>
+</body>
+</html>

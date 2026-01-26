@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}-幻想简报</title>
+    <link rel="stylesheet" href="{% static 'bootstrap5/bootstrap.min.css' %}">
+    <script src="{% static 'bootstrap5/popper.min.js' %}"></script>
+    <script src="{% static 'bootstrap5/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block head %}{% endblock %}
+</head>
+<body>
+<header class="p-3 text-bg-light border-bottom mb-3">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"><a
+                href="/static"
+                class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="启动" _mstaria-label="138918"
+                 _mstHash="27">
+                <use xlink:href="#bootstrap"></use>
+            </svg>
+        </a>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="/" class="nav-link px-2 text-secondary" _msttexthash="2136498" _msthash="28">首页</a></li>
+                <li><a href="{% url 'blog:pub_blog' %}" class="nav-link px-2 text-secondary" _msttexthash="5209451" _msthash="29">发布博客</a></li>
+            </ul>
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search" action="{% url 'blog:search' %}" method="get">
+                <input type="search"
+                       class="form-control"
+                       placeholder="搜索..."
+                       aria-label="搜索"
+                       _mstplaceholder="99723"
+                       _msthash="33"
+                       _mstaria-label="74607" name="q">
+            </form>
+            {% if user.is_authenticated %}
+                <div class="dropdown text-end"><a href="#"
+                                                  class="d-block link-body-emphasis text-decoration-none dropdown-toggle show"
+                                                  data-bs-toggle="dropdown" aria-expanded="true"> <img
+                        src="{% static 'image/avatar.webp' %}" alt="MDO" width="32" height="32" class="rounded-circle"
+                        _mstalt="33306" _msthash="42"> </a>
+                    <ul class="dropdown-menu text-small show" style="">
+                        <li><a class="dropdown-item" href="{% url 'blogauth:logout' %}">退出登录</a></li>
+                    </ul>
+                </div>
+            {% else %}
+                <div class="text-end">
+                    <a href="{% url 'blogauth:login' %}" type="button" class="btn btn-outline-primary me-2"
+                       _msttexthash="5298241" _msthash="34">登录</a>
+                    <a href="{% url 'blogauth:register' %}" type="button" class="btn btn-primary" _msttexthash="4708184"
+                       _msthash="35">注册</a>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+</header>
+<main class="container bg-white rounded">
+    {% block main %}{% endblock %}
+</main>
+</body>
+</html>
